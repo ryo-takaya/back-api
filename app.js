@@ -3,19 +3,18 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-const knex = require("knex");
 var app = express();
-require("dotenv").config();
-const db = knex(process.env.DATABASE_URL);
+const cors = require("cors");
+app.use(cors());
+const grah = require("./model/index");
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.get("/api", (req, res) => {});
+app.use("/grahql", grah);
 
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
